@@ -48,4 +48,35 @@ router.post('/', async (req, res) => {
     }
   
   });
+
+  router.put('/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+      const updatedMenu = await menu.findByIdAndUpdate(id, req.body, {
+        new: true,
+        runValidators: true
+      });
+      if (!updatedMenu) {
+        return res.status(404).send({ error: 'Menu item not found' });
+      }
+      res.status(200).json(updatedMenu);
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  });
+     
+
+
+  router.delete('/:id', async (req, res) => { 
+    const id = req.params.id;
+    try {
+      const deletedMenu = await menu.findByIdAndDelete(id);
+      if (!deletedMenu) {
+        return res.status(404).send({ error: 'Menu item not found' });
+      }
+      res.status(200).json(deletedMenu);
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  });
 module.exports=router;

@@ -43,6 +43,44 @@ router.get('/',async(req,res)=>{
       res.status(400).send(err);
     }
   })
+
+
+
+  router.put('/:id', async (req, res) => {
+    try {
+      const id=req.params.id;
+      const updatedPerson = await person.findByIdAndUpdate(id, req.body, {
+        new: true,
+        runValidators: true
+      });
+      res.send(updatedPerson);
+
+      if(!updatedPerson){
+        res.status(400).send({error:'Invalid id'});
+      }
+    }
+    catch (err) {
+      res.status(400).send(err);
+    }
+  });
   
+
+
+
+  router.delete('/:id', async (req, res) => {
+    
+    try {   
+      const id=req.params.id;
+      const deletedPerson = await person.findByIdAndDelete(id);
+
+      if(!deletedPerson){
+        return res.status(400).send({error:'Invalid id'});
+      }
+      res.send(deletedPerson);
+
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  });
   module.exports=router;
 
