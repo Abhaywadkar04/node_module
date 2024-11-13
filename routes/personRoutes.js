@@ -3,6 +3,7 @@ const router=express.Router();
 const person=require('./../models/person');
 
 
+
 router.post('/', async (req, res) => {
     try {
         const newPerson = new person(req.body);
